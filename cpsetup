@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Usage - 
+#
+# command - ./cpsetup.sh [FOLDER_NAME]
+#
+
+name=$1
+
+if [ -z "$name" ]
+then
+    echo "Folder name cannot be empty"
+    exit 1
+fi
+
+mkdir "$name"
+cd "$name"
+
+# This would be the starting template of the program
+cat << EOF > main.cpp
+#include <bits/stdc++.h>
+using namespace std;
+int main () {
+}
+EOF
+
+# Creates a tmux session with two windows. 
+# First window to write the program
+# Second window to build/test the code
+window=$name:1
+pane=$window.0
+tmux new-session -t "$name" -d
+tmux new-window -t "$name" -d
+tmux send-keys -t "$pane" 'vim main.cpp' Enter
+tmux attach-session -t "$name"

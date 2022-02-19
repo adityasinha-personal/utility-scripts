@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#Creates a binary and runs it on the terminal
+#Default file name is considered as main.cpp
+#Usage -
+#command - ./cpcompiler.sh [FILE_NAME]
+
+name=$1
+if [ -z "$name" ]
+then
+    name=main.cpp
+fi
+
+g++ -std=c++17 -O2 $name -o test
+./test
